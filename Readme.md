@@ -43,5 +43,5 @@ curl -X POST -H "Content-Type: application/json" -d "{\"url\": \"https://www.exa
 ### Redirect
 
 ```
-curl -X GET -H "Content-Type: application/json" -d {"}
+curl -X GET http://localhost:5249/PXDONQ
 ```
