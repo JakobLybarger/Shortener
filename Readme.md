@@ -36,7 +36,7 @@ curl -X POST -H "Content-Type: application/json" -d "{\"url\": \"https://www.exa
 
 ```
 {
-    "url": "http://localhost:8080/ABCDEF"
+    "url": "http://localhost:5249/ABCDEF"
 }
 ```
 
