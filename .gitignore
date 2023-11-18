@@ -1,3 +1,5 @@
 # Directories
-obj/
-bin/
+Shortener/obj/
+Shortener/bin/
+
+.DS_Store
