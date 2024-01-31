@@ -56,8 +56,11 @@ app.MapPost("/shorten", async (
 app.MapGet("/{shortenedUrl}", async (string shortenedUrl, ShortenContext dbContext) =>
 {
     var exists = await dbContext.Shorten.FirstOrDefaultAsync(urlItem => urlItem.Id == shortenedUrl);
-    if (exists is null)
-        return Results.NotFound("There is no mapping for this URL");
+    if (exists is null) return Results.NotFound("There is no mapping for this URL");
+
+    exists.RedirectCount++;
+
+    await dbContext.SaveChangesAsync();
 
     return Results.Redirect(exists.MappedUrl);
 });
