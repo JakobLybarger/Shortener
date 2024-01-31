@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="Shorten.Data\Shorten.Data.csproj" />
+    <ProjectReference Include="..\Shorten.Data\Shorten.Data.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
