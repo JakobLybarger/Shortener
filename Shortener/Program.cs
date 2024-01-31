@@ -8,7 +8,7 @@ using Shortener.Utils;
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("Shorten");
-builder.Services.AddDbContextFactory<ShortenContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ShortenContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
@@ -17,11 +17,9 @@ var mappings = new Dictionary<string, string>();
 
 app.MapPost("/shorten", async (
     [FromBody] ShortenRequest request,
-    IDbContextFactory<ShortenContext> shortenContextFactory,
+    ShortenContext dbContext,
     CancellationToken cancellationToken) =>
 {
-    using var shortenContext = await shortenContextFactory.CreateDbContextAsync();
-
     var shortenedUrl = string.Empty;
     if (request.CustomShortenedUrl is null)
     {
@@ -29,7 +27,7 @@ app.MapPost("/shorten", async (
     }
     else
     {
-        var exists = await shortenContext
+        var exists = await dbContext
             .Shorten
             .FirstOrDefaultAsync(shortenedUrl => shortenedUrl.Id == request.CustomShortenedUrl, cancellationToken);
 
@@ -49,16 +47,15 @@ app.MapPost("/shorten", async (
         RedirectCount = 0
     };
 
-    await shortenContext.AddAsync(urlItem, cancellationToken);
-    await shortenContext.SaveChangesAsync(cancellationToken);
+    await dbContext.AddAsync(urlItem, cancellationToken);
+    await dbContext.SaveChangesAsync(cancellationToken);
 
     return Results.Ok(new UrlResult { Url = $"{url}/{shortenedUrl}" });
 });
 
-app.MapGet("/{shortenedUrl}", async (string shortenedUrl, IDbContextFactory<ShortenContext> shortenContextFactory) =>
+app.MapGet("/{shortenedUrl}", async (string shortenedUrl, ShortenContext dbContext) =>
 {
-    using var shortenContext = await shortenContextFactory.CreateDbContextAsync();
-    var exists = await shortenContext.Shorten.FirstOrDefaultAsync(urlItem => urlItem.Id == shortenedUrl);
+    var exists = await dbContext.Shorten.FirstOrDefaultAsync(urlItem => urlItem.Id == shortenedUrl);
     if (exists is null)
         return Results.NotFound("There is no mapping for this URL");
 
