@@ -2,6 +2,7 @@
 Shortener/obj/
 Shortener/bin/
 
-Shorten.Data/obj
+Shorten.Data/obj/
+Shorten.Data/bin/
 
 .DS_Store
