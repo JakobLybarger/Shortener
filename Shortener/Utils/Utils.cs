@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace Shortener.Utils;
 
 public class Utils
