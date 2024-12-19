@@ -1,5 +1,3 @@
-using Shortener.Utils;
-
 namespace Shortener.Test;
 
 public class ShortenerTest

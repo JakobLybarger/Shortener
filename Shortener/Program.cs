@@ -24,7 +24,7 @@ builder.Services.AddHostedService<RedirectUpdater>();
 
 var app = builder.Build();
 
-var url = "http://localhost:5249";
+const string url = "http://localhost:5249";
 var mappings = new Dictionary<string, string>();
 
 app.MapPost("/shorten", async (
@@ -33,7 +33,7 @@ app.MapPost("/shorten", async (
     IMemoryCache cache,
     CancellationToken cancellationToken) =>
 {
-    var shortenedUrl = string.Empty;
+    string shortenedUrl;
     if (request.CustomShortenedUrl is null)
     {
         shortenedUrl = Utils.GenerateUrl();
@@ -42,7 +42,7 @@ app.MapPost("/shorten", async (
     {
         var exists = await dbContext
             .Shorten
-            .FirstOrDefaultAsync(shortenedUrl => shortenedUrl.Id == request.CustomShortenedUrl, cancellationToken);
+            .FirstOrDefaultAsync(u => u.Id == request.CustomShortenedUrl, cancellationToken);
 
         if (exists is not null)
         {
