@@ -10,7 +10,11 @@ using Shortener.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("Shorten");
+var connectionStringEnv = builder.Configuration.GetConnectionString("Shorten");
+Console.WriteLine($"ConnectionSTringEnv = {connectionStringEnv}");
+var connectionString = Environment.GetEnvironmentVariable(connectionStringEnv);
+Console.WriteLine($"ConnectionString = {connectionString}");
+
 builder.Services.AddDbContext<ShortenContext>(options => options.UseSqlServer(connectionString));
 
 // Add Cache

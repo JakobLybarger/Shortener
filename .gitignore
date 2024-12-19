@@ -11,3 +11,5 @@ Shortener.Test/bin/*
 .DS_Store
 
 .idea/
+
+.env
