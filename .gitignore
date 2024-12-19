@@ -1,11 +1,13 @@
 # Directories
-Shortener/obj/
-Shortener/bin/
+Shortener/obj/*
+Shortener/bin/*
 
-Shorten.Data/obj/
-Shorten.Data/bin/
+Shorten.Data/obj/*
+Shorten.Data/bin/*
 
-Shortener.Test/obj/
-Shortener.Test/bin/
+Shortener.Test/obj/*
+Shortener.Test/bin/*
 
 .DS_Store
+
+.idea/
