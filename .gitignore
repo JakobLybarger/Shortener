@@ -4,6 +4,7 @@ Shortener/bin/*
 
 Shorten.Data/obj/*
 Shorten.Data/bin/*
+Shorten.Data/Migrations/
 
 Shortener.Test/obj/*
 Shortener.Test/bin/*
