@@ -14,17 +14,10 @@ var connectionStringEnv = builder.Configuration.GetConnectionString("Shorten");
 if (connectionStringEnv is null)
     throw new Exception("EnvironmentVariable 'ConnectionString' is required.");
 
-var connectionString = Environment.GetEnvironmentVariable(connectionStringEnv);
+builder.Services.AddDbContext<ShortenContext>(options => options.UseNpgsql(connectionStringEnv));
 
-builder.Services.AddDbContext<ShortenContext>(options => options.UseSqlServer(connectionString));
-
-// Add Cache
 builder.Services.AddMemoryCache();
-
-// Add Channel
 builder.Services.AddSingleton(Channel.CreateUnbounded<string>());
-
-// Add Background service
 builder.Services.AddHostedService<RedirectUpdater>();
 
 var app = builder.Build();

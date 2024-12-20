@@ -10,7 +10,7 @@ public class ShortenContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<UrlItem>()
-            .ToTable("Shorten");
+            .ToTable("shorten");
 
         modelBuilder.Entity<UrlItem>()
             .HasKey(e => e.Id);
@@ -19,19 +19,23 @@ public class ShortenContext : DbContext
             .Property(e => e.Id)
             .IsUnicode(false)
             .HasMaxLength(6)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnName("id");
 
         modelBuilder.Entity<UrlItem>()
             .Property(e => e.ShortenedUrl)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnName("shortened_url");
 
         modelBuilder.Entity<UrlItem>()
             .Property(e => e.MappedUrl)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnName("mapped_url");
 
         modelBuilder.Entity<UrlItem>()
             .Property(e => e.RedirectCount)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnName("redirect_count");
     }
     public DbSet<UrlItem> Shorten { get; set; }
 }
